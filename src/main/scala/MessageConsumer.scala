@@ -10,21 +10,14 @@ object MessageConsumer {
     val portNumber = 5672
     val exchangeName = "testChannel"
     val routingKey = "routingKey"
+    val queueName = "testqueue"
     val factory = new ConnectionFactory()
-    factory.setUsername(userName)
-    factory.setPassword(password)
-    //factory.setVirtualHost(virtualHost)
-    factory.setHost(hostName)
-    factory.setPort(portNumber)
-    val conn = factory.newConnection()
-    println("Connection created!!!!!!")
+    factory.setHost("localhost")
+    val connection = factory.newConnection()
+    val channel = connection.createChannel()
 
-    val channel = conn.createChannel()
-    channel.exchangeDeclare(exchangeName, "direct", true)
-    val queueName = channel.queueDeclare().getQueue()
-    channel.queueBind(queueName, exchangeName, routingKey)
-
-    println("Waiting for messages...")
+    channel.queueDeclare(queueName, false, false, false, null);
+    System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
     val consumer  = new QueueingConsumer(channel)
     channel.basicConsume(queueName, true, consumer)
