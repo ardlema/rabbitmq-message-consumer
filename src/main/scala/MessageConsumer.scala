@@ -1,8 +1,7 @@
 package ardlema.rabbitmqmessageconsumer
 
-object HelloWorld {
+object MessageSender {
   def main(args: Array[String]) {
-    println("Hello World!!!")
+    println("hola wapooooo!!!!")
   }
 }
-
